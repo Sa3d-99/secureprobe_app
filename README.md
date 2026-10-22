@@ -10,7 +10,7 @@ Version **1.0.0** · Native desktop application · Local scan history and eviden
 
 ### Download the app
 
-[![Download Windows installer](https://img.shields.io/badge/Download-Windows%20Installer-2563EB?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/Sa3d-99/secureprobe_app/releases/latest/download/SecureProbe-Setup.exe)
+**Windows installer:** the native build is being validated. Its download button will appear when the file is ready.
 
 [![Download for Kali, Debian and Ubuntu](https://img.shields.io/badge/Download-Kali%20%2F%20Debian%20%2F%20Ubuntu-0891B2?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/Sa3d-99/secureprobe_app/releases/latest/download/SecureProbe.deb)
 
@@ -20,7 +20,7 @@ Version **1.0.0** · Native desktop application · Local scan history and eviden
 
 **x86_64 / 64-bit PCs.** These buttons download built applications. Python, Node.js, Rust, and development tools are not required.
 
-*Downloads become available after the first release passes its Windows and Linux build checks. Until then, a download button may report that the file is not available yet.*
+**Linux release 1.0.0 is available.** The initial packages target Kali rolling and Debian 12+; the Ubuntu 22.04 build is still being validated.
 
 </div>
 
@@ -40,9 +40,9 @@ Linux support targets x86_64 GNU/Linux desktops. Compatibility with every distri
 <details>
 <summary><strong>Optional: automatic Linux installer</strong></summary>
 
-This installer selects a native package or installs an AppImage for your user. It verifies the signed checksum manifest and the selected download before installation. System package installation may request your administrator password. The script installs the built desktop application; it does not run the app from source.
+This installer puts the AppImage, bundled Python engine, tools, and resources in SecureProbe’s own folder for your user. It verifies the signed checksum manifest and the selected download before installation. System package installation may request your administrator password. The script installs the built desktop application; it does not run the app from source.
 
-[![Download automatic Linux installer](https://img.shields.io/badge/Download-Automatic%20Linux%20Installer-475569?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/Sa3d-99/secureprobe_app/releases/latest/download/install-secureprobe.sh)
+[![Download automatic Linux installer](https://img.shields.io/badge/Download-Automatic%20Linux%20Installer-475569?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/Sa3d-99/secureprobe_app/releases/latest/download/install.sh)
 
 </details>
 
@@ -73,6 +73,14 @@ Seven tool binaries are prepared for packaging: Nuclei, ProjectDiscovery httpx, 
 Nmap, testssl.sh, standalone OpenSSL, and ZAP are not bundled in this initial build. EPSS, automatic affected-version matching, detection-rule synchronization, and PDF export are not available. CVE catalog membership never proves that a target is vulnerable.
 
 </details>
+
+## Uninstall and clean storage
+
+Close SecureProbe, then use **Uninstall SecureProbe** from your application menu for an automatic Linux installation. It removes the app and SecureProbe’s scan history, evidence, settings, cache, and bundled tools. Shared system libraries and other applications are retained. Native packages can also be removed with your system’s software manager.
+
+[![Download Linux uninstaller](https://img.shields.io/badge/Download-Linux%20Uninstaller-DC2626?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/Sa3d-99/secureprobe_app/releases/latest/download/uninstall.sh)
+
+Windows uses its registered uninstaller in **Settings → Apps**. Choose **Delete application data** to clean its stored scans and settings too.
 
 ## Updates and privacy
 
