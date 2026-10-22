@@ -40,7 +40,7 @@ Linux support targets x86_64 GNU/Linux desktops. Compatibility with every distri
 <details>
 <summary><strong>Optional: automatic Linux installer</strong></summary>
 
-Run the downloaded installer with **sudo bash install.sh**. It returns to your desktop account for the app files, so they remain owned by you.
+The installer is also available directly as [install.sh](install.sh) in this repository. Run it with **sudo bash install.sh**. It returns to your desktop account for the app files, so they remain owned by you.
 
 This installer puts the AppImage, bundled Python engine, tools, and resources in SecureProbe’s own folder for your user. It verifies the signed checksum manifest and the selected download before installation. System package installation may request your administrator password. The script installs the built desktop application; it does not run the app from source.
 
