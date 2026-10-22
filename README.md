@@ -6,11 +6,11 @@
 
 **Desktop security assessments for Windows and Linux**
 
-Version **1.0.0** · Native desktop application · Local scan history and evidence
+Version **1.0.1** · Native desktop application · Local scan history and evidence
 
 ### Download the app
 
-**Windows installer:** the native build is being validated. Its download button will appear when the file is ready.
+[![Download Windows installer](https://img.shields.io/badge/Download-Windows%20Installer-2563EB?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/Sa3d-99/secureprobe_app/releases/latest/download/SecureProbe-Setup.exe)
 
 [![Download for Kali, Debian and Ubuntu](https://img.shields.io/badge/Download-Kali%20%2F%20Debian%20%2F%20Ubuntu-0891B2?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/Sa3d-99/secureprobe_app/releases/latest/download/SecureProbe.deb)
 
@@ -20,7 +20,7 @@ Version **1.0.0** · Native desktop application · Local scan history and eviden
 
 **x86_64 / 64-bit PCs.** These buttons download built applications. Python, Node.js, Rust, and development tools are not required.
 
-**Linux release 1.0.0 is available.** The initial packages target Kali rolling and Debian 12+; the Ubuntu 22.04 build is still being validated.
+**Release 1.0.1 is available for Windows and Linux.** Linux packages are built on Ubuntu 22.04 for compatibility. Windows and Linux native startup checks passed; the AppImage was also launched on an Ubuntu 22.04 desktop.
 
 </div>
 
@@ -40,7 +40,15 @@ Linux support targets x86_64 GNU/Linux desktops. Compatibility with every distri
 <details>
 <summary><strong>Optional: automatic Linux installer</strong></summary>
 
-The installer is also available directly as [install.sh](install.sh) in this repository. Run it with **sudo bash install.sh**. It returns to your desktop account for the app files, so they remain owned by you.
+The installer is also available directly as [install.sh](install.sh) in this repository.
+
+Download **install.sh**, open a terminal in the folder containing it, and run:
+
+```bash
+sudo bash install.sh
+```
+
+Enter your password if prompted. The installer returns to your desktop account for the app files, so they remain owned by you. When it finishes, open **SecureProbe** from your applications menu.
 
 This installer puts the AppImage, bundled Python engine, tools, and resources in SecureProbe’s own folder for your user. It verifies the signed checksum manifest and the selected download before installation. System package installation may request your administrator password. The script installs the built desktop application; it does not run the app from source.
 
@@ -83,6 +91,14 @@ Close SecureProbe, then run the downloaded **uninstall.sh** as your desktop user
 [![Download Linux uninstaller](https://img.shields.io/badge/Download-Linux%20Uninstaller-DC2626?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/Sa3d-99/secureprobe_app/releases/latest/download/uninstall.sh)
 
 The uninstaller is also available directly as [uninstall.sh](uninstall.sh) in this repository.
+
+Close the app, download **uninstall.sh**, open a terminal in the folder containing it, and run:
+
+```bash
+bash uninstall.sh
+```
+
+Run the uninstaller without `sudo`. It requests administrator access only if it needs to remove a system package. By default, it also deletes SecureProbe’s stored scans, evidence, settings, and cache.
 
 Windows uses its registered uninstaller in **Settings → Apps**. Choose **Delete application data** to clean its stored scans and settings too.
 
