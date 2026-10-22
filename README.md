@@ -1,77 +1,81 @@
-# SecureProbe 1.0.0
+<div align="center">
 
-A native desktop security workbench for Windows and Linux. Run authorized website assessments, inspect collected evidence, review module coverage, and keep scan history locally.
+# SecureProbe
 
-[Download the latest release](https://github.com/Sa3d-99/secureprobe_app/releases/latest) · [Source code](https://github.com/Sa3d-99/secureprobe) · [Report a problem](https://github.com/Sa3d-99/secureprobe/issues)
+**Desktop security assessments for Windows and Linux**
 
-Installers appear in **Releases** after both platform builds and startup checks pass. If there is no published release yet, the first build is still being validated.
+Version **1.0.0** · Native desktop application · Local scan history and evidence
 
-## Install
+### Download the app
 
-**Windows x64:** download the `SecureProbe-Setup.exe` installer. It installs for your user and includes the Python engine and WebView2 installer. Python, Node.js, Rust, and Java are not required to run the included assessments. Update signatures authenticate app updates; they do not constitute a Microsoft Authenticode certificate.
+[![Download Windows installer](https://img.shields.io/badge/Download-Windows%20Installer-2563EB?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/Sa3d-99/secureprobe_app/releases/latest/download/SecureProbe-Setup.exe)
 
-**Kali Linux / Debian / Ubuntu x86_64:** download the `.deb`, then install it with:
+[![Download for Kali, Debian and Ubuntu](https://img.shields.io/badge/Download-Kali%20%2F%20Debian%20%2F%20Ubuntu-0891B2?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/Sa3d-99/secureprobe_app/releases/latest/download/SecureProbe.deb)
 
-```bash
-sudo apt install ./SecureProbe.deb
-```
+[![Download Linux RPM](https://img.shields.io/badge/Download-Fedora%20%2F%20RPM-2563EB?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/Sa3d-99/secureprobe_app/releases/latest/download/SecureProbe.rpm)
 
-Use the exact filename from the release. Launch SecureProbe from the applications menu. Installing through `apt` resolves declared desktop-library dependencies.
+[![Download Linux AppImage](https://img.shields.io/badge/Download-Linux%20AppImage-0891B2?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/Sa3d-99/secureprobe_app/releases/latest/download/SecureProbe.AppImage)
 
-**Fedora / compatible RPM distributions x86_64:** download the `.rpm` and install it using your distribution’s package manager, for example `sudo dnf install ./SecureProbe.rpm`. Use the filename from the release.
+**x86_64 / 64-bit PCs.** These buttons download built applications. Python, Node.js, Rust, and development tools are not required.
 
-**Other desktop Linux distributions:** download the `.AppImage`:
+*Downloads become available after the first release passes its Windows and Linux build checks. Until then, a download button may report that the file is not available yet.*
 
-```bash
-chmod +x SecureProbe.AppImage
-./SecureProbe.AppImage
-```
+</div>
 
-If FUSE is unavailable, try `./SecureProbe.AppImage --appimage-extract-and-run`. Updates to an AppImage require a writable location. Native `.deb`/`.rpm` installations can be upgraded by installing the newer package when automatic installation is unavailable.
+## Install and open
 
-The initial architecture target is **x86_64 GNU/Linux with a graphical desktop**. AppImage improves portability but is not a guarantee for every distribution. Alpine/musl, ARM, very old distributions, and headless systems are not validated targets. See the release notes for actual test coverage.
+| Your computer | What to download | Installation |
+| --- | --- | --- |
+| Windows | Windows Installer | Open **SecureProbe-Setup.exe**, follow the installer, then open **SecureProbe** from the Start menu. |
+| Kali, Debian, Ubuntu | Debian package | Open **SecureProbe.deb** with your system’s package installer. Allow it to install required desktop libraries. |
+| Compatible RPM Linux | RPM package | Open **SecureProbe.rpm** with your system’s software installer. |
+| Other desktop GNU/Linux | AppImage | Save **SecureProbe.AppImage**, enable execution in its file properties, then open it. |
 
-## First assessment
+The app name stays **SecureProbe**. Its version appears inside the app. Download filenames do not contain the version number.
 
-1. Open **New Scan** and enter an HTTP or HTTPS URL you are authorized to test.
-2. Select a profile, modules, request rate, and request budget. Private network targets require explicit opt-in.
-3. Acknowledge authorization and start the assessment. Progress, pause, resume, and cancellation are available in the window.
-4. Open **Findings** to inspect evidence, confidence, verification status, and remediation. **Reports** exports JSON through a native save dialog.
+Linux support targets x86_64 GNU/Linux desktops. Compatibility with every distribution, Alpine/musl, ARM, or very old systems is not guaranteed. AppImage needs a writable location for automatic replacement; native packages can be upgraded with a newer package.
 
-A completed scan does not certify that a website is secure. Failed, skipped, inconclusive, and untested checks remain unknown. Potential exposure is distinct from verified impact.
+<details>
+<summary><strong>Optional: automatic Linux installer</strong></summary>
 
-## Included functionality and limits
+This installer selects a native package or installs an AppImage for your user. It verifies the signed checksum manifest and the selected download before installation. System package installation may request your administrator password. The script installs the built desktop application; it does not run the app from source.
 
-- The existing Python engine performs sixteen HTTP/TLS security checks. CLI and desktop share that engine.
-- Scan history, evidence, settings, and a transactional CISA KEV catalog cache stay on your computer.
-- The Tools page checks bundled file hashes and executable versions. Seven tool payloads are pinned for packaging: Nuclei, ProjectDiscovery httpx, Katana, ffuf, Trivy, Grype, and Gitleaks. **An available binary is not an integrated detection adapter.** These tools are not yet additional selectable desktop scan modules.
-- Nmap, testssl.sh, standalone OpenSSL, and ZAP are not bundled in this initial build. The inventory records the unresolved licensing, packaging, or runtime requirements. Python’s native TLS checks remain available.
-- CVE research currently uses CISA KEV. EPSS, automatic affected-version matching, and detection-rule updates are not available. Catalog membership never establishes target vulnerability.
-- Native report export currently supports JSON. The Python scanner retains HTML, JSON, and text reporting. PDF export is not implemented.
+[![Download automatic Linux installer](https://img.shields.io/badge/Download-Automatic%20Linux%20Installer-475569?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/Sa3d-99/secureprobe_app/releases/latest/download/install-secureprobe.sh)
 
-## Updates
+</details>
 
-Open **Update Center** to check for new versions and approve installation. The app verifies update signatures before installing executable code. New source pushes trigger the release build workflow; a failed build does not become a public update. The first release is **1.0.0**, followed by increasing patch versions. The application name and download filenames remain **SecureProbe**, without a version suffix; the version is shown inside the app and stored in package metadata.
+## Start an assessment
 
-Vulnerability catalog synchronization is separate and explicitly requested in **Vulnerability Intelligence**. Bundled tool executables change only with an authenticated app release. User data is stored outside the installation folder: `~/.local/share/SecureProbe` on Linux and `%LOCALAPPDATA%\SecureProbe` on Windows.
+1. Open **New Scan** and enter a website you own or are authorized to assess.
+2. Choose the profile, scanner modules, request rate, and request budget.
+3. Confirm authorization, then select **Start assessment**.
+4. Watch progress in the window. Pause, resume, or cancel when needed.
+5. Open **Findings** to review evidence and remediation, or **Reports** to save the results.
 
-## Project repositories
+## What the app includes
 
-This repository contains downloads, release notes, and end-user documentation. Application source, tests, packaging scripts, tool manifests, and build workflows live in [Sa3d-99/secureprobe](https://github.com/Sa3d-99/secureprobe). Generated binaries and private scan reports are excluded from the source repository.
+- Sixteen HTTP/TLS security checks using the shared scanning engine.
+- Local scan history, findings, evidence, coverage, comparisons, and JSON export.
+- Scope validation, private-network opt-in, request pacing and budgets.
+- A tool inventory with hash verification and executable health checks.
+- A local CISA KEV catalog for vulnerability research and offline search after synchronization.
+- Signed application updates through **Update Center**.
 
-Only assess systems you own or have explicit authorization to test.
+A completed scan is not a security certification. Failed, skipped, inconclusive, and untested checks remain unknown. Potential exposure is distinct from confirmed impact.
 
-## Automatic Linux installer
+<details>
+<summary><strong>Current feature coverage</strong></summary>
 
-Download the Bash installer, optionally inspect it, then run it as your normal user:
+Seven tool binaries are prepared for packaging: Nuclei, ProjectDiscovery httpx, Katana, ffuf, Trivy, Grype, and Gitleaks. Their inventory and health checks are available; they do not yet provide additional selectable desktop detection adapters.
 
-```bash
-curl -fL https://raw.githubusercontent.com/Sa3d-99/secureprobe_app/main/install.sh -o install-secureprobe.sh
-bash install-secureprobe.sh
-```
+Nmap, testssl.sh, standalone OpenSSL, and ZAP are not bundled in this initial build. EPSS, automatic affected-version matching, detection-rule synchronization, and PDF export are not available. CVE catalog membership never proves that a target is vulnerable.
 
-It selects `.deb` on Kali/Debian/Ubuntu, `.rpm` on dnf/zypper systems, and a per-user AppImage otherwise. It installs missing `curl` through the distribution package manager and uses an existing minisign verifier or a temporary upstream static verifier checked against a pinned SHA-256, verifies a signed checksum manifest against the embedded release public key, verifies the selected payload, then installs. System package installation may ask for your sudo password. It never runs the graphical app as root.
+</details>
 
-Use `bash install-secureprobe.sh --appimage` for a per-user installation, or `--check` to inspect platform/dependency availability without changing anything. AppImage launch uses extraction mode so FUSE is not required. No Python, Node, Rust, Java, jq, or scanner-development toolchain is needed by this installer. A public release must exist before installation can complete.
+## Updates and privacy
+
+Open **Update Center** to check for a new app version and approve installation. Executable updates require a valid signature. Vulnerability catalog synchronization is separate, under **Vulnerability Intelligence**.
+
+Scans, findings, evidence, and settings remain on your computer. Upgrades preserve the workspace outside the app installation folder.
 
 The app icon is the cyber shield image supplied by the project owner.
