@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="secureprobe.png" width="110" alt="SecureProbe app icon">
+
 # SecureProbe
 
 **Desktop security assessments for Windows and Linux**
