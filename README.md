@@ -40,6 +40,8 @@ Linux support targets x86_64 GNU/Linux desktops. Compatibility with every distri
 <details>
 <summary><strong>Optional: automatic Linux installer</strong></summary>
 
+Run the downloaded installer with **sudo bash install.sh**. It returns to your desktop account for the app files, so they remain owned by you.
+
 This installer puts the AppImage, bundled Python engine, tools, and resources in SecureProbe’s own folder for your user. It verifies the signed checksum manifest and the selected download before installation. System package installation may request your administrator password. The script installs the built desktop application; it does not run the app from source.
 
 [![Download automatic Linux installer](https://img.shields.io/badge/Download-Automatic%20Linux%20Installer-475569?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/Sa3d-99/secureprobe_app/releases/latest/download/install.sh)
@@ -76,9 +78,11 @@ Nmap, testssl.sh, standalone OpenSSL, and ZAP are not bundled in this initial bu
 
 ## Uninstall and clean storage
 
-Close SecureProbe, then use **Uninstall SecureProbe** from your application menu for an automatic Linux installation. It removes the app and SecureProbe’s scan history, evidence, settings, cache, and bundled tools. Shared system libraries and other applications are retained. Native packages can also be removed with your system’s software manager.
+Close SecureProbe, then run the downloaded **uninstall.sh** as your desktop user for an automatic Linux installation. It removes the app and SecureProbe’s scan history, evidence, settings, cache, and bundled tools. Shared system libraries and other applications are retained. Native packages can also be removed with your system’s software manager.
 
 [![Download Linux uninstaller](https://img.shields.io/badge/Download-Linux%20Uninstaller-DC2626?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/Sa3d-99/secureprobe_app/releases/latest/download/uninstall.sh)
+
+The uninstaller is also available directly as [uninstall.sh](uninstall.sh) in this repository.
 
 Windows uses its registered uninstaller in **Settings → Apps**. Choose **Delete application data** to clean its stored scans and settings too.
 
