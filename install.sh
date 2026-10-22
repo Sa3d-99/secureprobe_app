@@ -41,7 +41,7 @@ if [[ $mode == auto ]]; then
 fi
 if [[ $mode == check ]]; then
     printf 'Linux x86_64 detected; package manager: %s\n' "$package_manager"
-    for dependency in curl minisign sha256sum base64; do
+    for dependency in curl sha256sum base64 tar; do
         command -v "$dependency" >/dev/null 2>&1 || printf 'Required dependency missing: %s\n' "$dependency"
     done
     exit 0
@@ -53,11 +53,11 @@ if [[ $mode == appimage ]]; then
     (( EUID != 0 )) || fail 'Run --appimage as your normal desktop user, without sudo.'
 fi
 missing=()
-for dependency in curl minisign; do
+for dependency in curl; do
     command -v "$dependency" >/dev/null 2>&1 || missing+=("$dependency")
 done
 if (( ${#missing[@]} )); then
-    printf 'Installing required download/signature tools: %s\n' "${missing[*]}"
+    printf 'Installing required download tools: %s\n' "${missing[*]}"
     case $package_manager in
         apt) privileged apt-get update; privileged apt-get install -y "${missing[@]}" ;;
         dnf) privileged dnf install -y "${missing[@]}" ;;
@@ -75,10 +75,27 @@ fetch() {
         --retry 3 --connect-timeout 15 --max-time 900 "$RELEASE_URL/$1" --output "$temporary_dir/$1" \
         || fail "Cannot download $1. Check connectivity and whether a public release exists."
 }
+# Ubuntu 22.04 has no minisign package. Use an upstream static verifier temporarily.
+# The pinned hash authenticates these fixed bytes before they can be executed.
+verifier=minisign
+if ! command -v minisign >/dev/null 2>&1; then
+    command -v tar >/dev/null 2>&1 || fail 'GNU tar is required to prepare the signature verifier.'
+    verifier_archive="$temporary_dir/minisign.tar.gz"
+    curl --fail --silent --show-error --location --proto '=https' --proto-redir '=https' \
+        --retry 3 --connect-timeout 15 --max-time 90 \
+        https://github.com/jedisct1/minisign/releases/download/0.12/minisign-0.12-linux.tar.gz \
+        --output "$verifier_archive" || fail 'Cannot download the pinned signature verifier.'
+    printf '%s  %s\n' '9a599b48ba6eb7b1e80f12f36b94ceca7c00b7a5173c95c3efc88d9822957e73' "$verifier_archive" \
+        | sha256sum --check --status || fail 'Signature verifier integrity check failed.'
+    verifier="$temporary_dir/minisign"
+    tar -xOzf "$verifier_archive" minisign-linux/x86_64/minisign > "$verifier" \
+        || fail 'Cannot prepare the signature verifier.'
+    chmod 700 "$verifier"
+fi
 fetch SHA256SUMS
 fetch SHA256SUMS.sig
 base64 --decode < "$temporary_dir/SHA256SUMS.sig" > "$temporary_dir/checksums.minisig" || fail 'Invalid checksum signature encoding.'
-minisign -Vm "$temporary_dir/SHA256SUMS" -P "$SIGNING_KEY" -x "$temporary_dir/checksums.minisig" \
+"$verifier" -Vm "$temporary_dir/SHA256SUMS" -P "$SIGNING_KEY" -x "$temporary_dir/checksums.minisig" \
     || fail 'Release signature verification failed. Nothing was installed.'
 verified_download() {
     local asset=$1 checksum
@@ -90,24 +107,24 @@ verified_download() {
 
 case $mode in
     deb)
-        asset=SecureProbe-linux-x86_64.deb
+        asset=SecureProbe.deb
         verified_download "$asset"
         privileged apt-get install -y "$temporary_dir/$asset"
         ;;
     rpm)
-        asset=SecureProbe-linux-x86_64.rpm
+        asset=SecureProbe.rpm
         verified_download "$asset"
         if [[ $package_manager == dnf ]]; then privileged dnf install -y "$temporary_dir/$asset";
         else privileged zypper --non-interactive install "$temporary_dir/$asset"; fi
         ;;
     appimage)
-        verified_download SecureProbe-linux-x86_64.AppImage
+        verified_download SecureProbe.AppImage
         verified_download secureprobe.png
         data_dir=${XDG_DATA_HOME:-$HOME/.local/share}
         [[ $data_dir == /* && $data_dir != *$'\n'* && $data_dir != *'"'* && $data_dir != *'%'* ]] || fail 'Unsupported XDG_DATA_HOME path.'
         install_dir="$data_dir/SecureProbe/app"
         mkdir -p -- "$install_dir" "$data_dir/applications" "$data_dir/icons/hicolor/256x256/apps" "$HOME/.local/bin"
-        install -m 755 "$temporary_dir/SecureProbe-linux-x86_64.AppImage" "$install_dir/SecureProbe.AppImage.new"
+        install -m 755 "$temporary_dir/SecureProbe.AppImage" "$install_dir/SecureProbe.AppImage.new"
         mv -f -- "$install_dir/SecureProbe.AppImage.new" "$install_dir/SecureProbe.AppImage"
         install -m 644 "$temporary_dir/secureprobe.png" "$data_dir/icons/hicolor/256x256/apps/secureprobe.png"
         {
