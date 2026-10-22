@@ -60,3 +60,18 @@ Vulnerability catalog synchronization is separate and explicitly requested in **
 This repository contains downloads, release notes, and end-user documentation. Application source, tests, packaging scripts, tool manifests, and build workflows live in [Sa3d-99/secureprobe](https://github.com/Sa3d-99/secureprobe). Generated binaries and private scan reports are excluded from the source repository.
 
 Only assess systems you own or have explicit authorization to test.
+
+## Automatic Linux installer
+
+Download the Bash installer, optionally inspect it, then run it as your normal user:
+
+```bash
+curl -fL https://raw.githubusercontent.com/Sa3d-99/secureprobe_app/main/install.sh -o install-secureprobe.sh
+bash install-secureprobe.sh
+```
+
+It selects `.deb` on Kali/Debian/Ubuntu, `.rpm` on dnf/zypper systems, and a per-user AppImage otherwise. It installs missing `curl`/`minisign` packages through the distribution package manager, verifies a signed checksum manifest against the embedded release public key, verifies the selected payload, then installs. System package installation may ask for your sudo password. It never runs the graphical app as root.
+
+Use `bash install-secureprobe.sh --appimage` for a per-user installation, or `--check` to inspect platform/dependency availability without changing anything. AppImage launch uses extraction mode so FUSE is not required. No Python, Node, Rust, Java, jq, or scanner-development toolchain is needed by this installer. A public release must exist before installation can complete.
+
+The app icon is the cyber shield image supplied by the project owner.
